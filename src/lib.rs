@@ -62,6 +62,14 @@ extern "C" {
     fn probe(tag: *const c_char, data: *const c_char);
 }
 
+/// Trace utility for incoming requests and responses.
+///
+/// # Examples
+///
+/// ```
+/// let opt: Option<String> = Some("identifier".to_string());
+/// tide_trace::fire("data to log".to_string(), opt);
+/// ```
     pub fn fire(data : String, tag: Option<String>) {
         let c_tag : CString;
 

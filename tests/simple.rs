@@ -2,9 +2,7 @@ mod test_utils;
 use async_std::prelude::*;
 use async_std::task;
 use std::time::Duration;
-
-// use serde::{Deserialize, Serialize};
-use tide::{Body, Request, Response, StatusCode};
+use tide::{Request, Response, StatusCode};
 
 #[test]
 fn hello_world() -> Result<(), http_types::Error> {
@@ -12,7 +10,7 @@ fn hello_world() -> Result<(), http_types::Error> {
         let port = test_utils::find_port().await;
         let server = task::spawn(async move {
             let mut app = tide::new();
-            app.middleware(USDTMiddleware::new(0));
+            app.middleware(tide_trace::USDTMiddleware::new(0));
             app.at("/").get(move |mut req: Request<()>| async move {
                 assert_eq!(req.body_string().await.unwrap(), "nori".to_string());
                 assert!(req.local_addr().unwrap().contains(&port.to_string()));

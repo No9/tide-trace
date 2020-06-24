@@ -1,4 +1,8 @@
-usdt:/home/anton/code/trace-test/target/debug/trace-test:tideserver:startroute 
+usdt::tide:startroute 
+{ 
+    printf("method: %s path: %s id: %d\n", str(arg0), str(arg1), arg2); 
+}
+usdt::tide:endroute 
 { 
     printf("method: %s path: %s id: %d\n", str(arg0), str(arg1), arg2); 
 }

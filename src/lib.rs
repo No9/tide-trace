@@ -39,7 +39,6 @@ impl<State: Send + Sync + 'static> Middleware<State> for USDTMiddleware {
             let path = CString::new(req.url().path().to_owned()).expect("CString::new path failed");
             let method = CString::new(req.method().to_string()).expect("CString::new method failed");
             
-            println!("{}", count);
             unsafe {
                 startroute(method.as_ptr(), path.as_ptr(), count);
             }

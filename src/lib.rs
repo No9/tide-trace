@@ -66,26 +66,17 @@ extern "C" {
     fn endroute(method: *const c_char, path: *const c_char, reqid: c_int, status: c_int, headers: *const c_char);
     fn fire(tag: *const c_char, data: *const c_char);
 }
-
 /// Trace utility for incoming requests and responses.
 ///
 /// # Examples
 ///
 /// ```
-/// let opt: Option<String> = Some("identifier".to_string());
-/// tide_trace::probe("data to log".to_string(), opt);
+/// tide_trace::probe("identifier".to_string(), "data to log".to_string());
 /// ```
-    pub fn probe(data : String, tag: Option<String>) {
-        let c_tag : CString;
-
-        if let Some(tag) = tag {
-            c_tag = CString::new(tag).expect("CString::new tag failed");
-        } else {
-            c_tag = CString::new("default").expect("CString::new tag failed");
-        }
-        
-        let c_data = CString::new(data).expect("CString::new data failed");
-        unsafe {
-            fire(c_tag.as_ptr(), c_data.as_ptr());
-        }
+pub fn probe(tag: String, data : String) {        
+    let c_data = CString::new(data).expect("CString::new data failed");
+    let c_tag = CString::new(tag).expect("CString::new tag failed");
+    unsafe {
+        fire(c_tag.as_ptr(), c_data.as_ptr());
     }
+}

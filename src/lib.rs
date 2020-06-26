@@ -13,7 +13,7 @@ use std::os::raw::c_char;
 ///
 /// ```
 ///     let mut app = tide::new();
-///     app.middleware(tide_trace::USDTMiddleware::new(0));
+///     app.middleware(tide_trace::USDTMiddleware::new());
 /// ```
 #[derive(Debug, Clone)]
 pub struct USDTMiddleware {
@@ -38,19 +38,22 @@ impl<State: Send + Sync + 'static> Middleware<State> for USDTMiddleware {
             let count = self.reqid.fetch_add(1, Ordering::SeqCst);
             let path = CString::new(req.url().path().to_owned()).expect("CString::new path failed");
             let method = CString::new(req.method().to_string()).expect("CString::new method failed");
-            
+            let req_headers_coll = req.iter().map(|h| format!("{:?};", h)) 
+            .collect::<Vec<String>>()
+            .join("; ");
+            let req_headers = CString::new(req_headers_coll).expect("CString::new header failed");
             unsafe {
-                startroute(method.as_ptr(), path.as_ptr(), count);
+                startroute(method.as_ptr(), path.as_ptr(), count, req_headers.as_ptr());
             }
   
             let res = next.run(req).await?;
             let status = res.status() as i32;
-            let headers = res.iter().map(|h| format!("{:?};", h)) 
+            let res_headers_coll = res.iter().map(|h| format!("{:?};", h)) 
             .collect::<Vec<String>>()
             .join("; ");
-            let c_headers = CString::new(headers).expect("CString::new header failed");
+            let res_headers = CString::new(res_headers_coll).expect("CString::new header failed");
             unsafe {
-                endroute(method.as_ptr(), path.as_ptr(),  count, status, c_headers.as_ptr());
+                endroute(method.as_ptr(), path.as_ptr(),  count, status, res_headers.as_ptr());
             }
             self.reqid.load(Ordering::SeqCst);
             Ok(res)
@@ -59,9 +62,9 @@ impl<State: Send + Sync + 'static> Middleware<State> for USDTMiddleware {
 }
 
 extern "C" {
-    fn startroute(method: *const c_char, path: *const c_char, reqid: c_int);
+    fn startroute(method: *const c_char, path: *const c_char, reqid: c_int, headers: *const c_char);
     fn endroute(method: *const c_char, path: *const c_char, reqid: c_int, status: c_int, headers: *const c_char);
-    fn probe(tag: *const c_char, data: *const c_char);
+    fn fire(tag: *const c_char, data: *const c_char);
 }
 
 /// Trace utility for incoming requests and responses.
@@ -70,9 +73,9 @@ extern "C" {
 ///
 /// ```
 /// let opt: Option<String> = Some("identifier".to_string());
-/// tide_trace::fire("data to log".to_string(), opt);
+/// tide_trace::probe("data to log".to_string(), opt);
 /// ```
-    pub fn fire(data : String, tag: Option<String>) {
+    pub fn probe(data : String, tag: Option<String>) {
         let c_tag : CString;
 
         if let Some(tag) = tag {
@@ -83,6 +86,6 @@ extern "C" {
         
         let c_data = CString::new(data).expect("CString::new data failed");
         unsafe {
-            probe(c_tag.as_ptr(), c_data.as_ptr());
+            fire(c_tag.as_ptr(), c_data.as_ptr());
         }
     }

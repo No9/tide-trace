@@ -9,6 +9,7 @@ tideserver*:::startroute
 tideserver*:::endroute
 /track[arg2]/
 {
-   @[copyinstr(arg1)] = quantize((timestamp - track[arg2]) / 1000000);
+   printf("method: %s path: %s id: %d status: %d headers:%s\n", str(arg0), str(arg1), arg2, arg3, str(arg4));
+   printf("Request time %d ns\n", (timestamp - track[arg2]));
    track[arg2] = 0;
 }

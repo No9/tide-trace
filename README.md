@@ -20,7 +20,7 @@ $ sudo dnf install systemtap-sdt-devel bpftrace
 
 ## example usage
 
-For a prebuilt example application see https://github.com/No9/tide-trace-test 
+For a prebuilt applications see examples folder
 
 
 Make a project 
@@ -57,4 +57,7 @@ $ curl http://localhost:8080/
 
 ## tests 
 
-see https://github.com/No9/tide-trace-test
+```
+$ cargo build --examples 
+$ sudo ./tests/test-all.sh
+```

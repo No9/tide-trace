@@ -1,7 +1,7 @@
 #include <sys/sdt.h>
 #include "tide-trace.h"
 
-void startroute(char* method, char* path, char* id)   
+void startroute(char* method, char* path, int id)   
 {
     DTRACE_PROBE3(tide, startroute, method, path, id);
 }

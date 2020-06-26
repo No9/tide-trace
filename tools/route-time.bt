@@ -4,5 +4,5 @@ usdt::tide:startroute
 }
 usdt::tide:endroute 
 { 
-    printf("method: %s path: %s id: %d\n", str(arg0), str(arg1), arg2); 
+    printf("method: %s path: %s id: %d status: %d headers:%s\n", str(arg0), str(arg1), arg2, arg3, str(arg4)); 
 }

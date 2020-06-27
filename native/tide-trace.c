@@ -12,5 +12,5 @@ void endroute(char* method, char* path, int id, int status, char* headers)
 }
 
 void fire(char* tag, char* data) {
-    DTRACE_PROBE2(tide, startroute, tag, data);
+    DTRACE_PROBE2(tide, fire, tag, data);
 }

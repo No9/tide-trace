@@ -1,0 +1,4 @@
+usdt::tide:fire 
+{ 
+    printf("tag: %s message: %s \n", str(arg0), str(arg1));
+}

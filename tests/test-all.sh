@@ -1,3 +1,4 @@
 #!/bin/bash 
 cd "$(dirname "$0")"
-./hello.sh
+./route.sh
+./probe.sh

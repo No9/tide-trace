@@ -3,7 +3,11 @@ name = "tide-trace"
 version = "0.1.0"
 authors = ["Anton Whalley <anton@venshare.com>"]
 edition = "2018"
-
+description = "Minimum overhead USDT middleware to dynamically trace tide with BPF or DTrace"
+license = "Apache-2.0"
+license-file = "LICENSE"
+documentation = "https://docs.rs/tide-trace"
+homepage = "https://github.com/no9/tide-trace"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]

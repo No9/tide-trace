@@ -14,6 +14,6 @@ fn main() {
         .status()
         .unwrap();
 
-    println!("cargo:rustc-link-search=native={}", "./native");
+    println!("cargo:rustc-link-search=native={}", "./target/native");
     println!("cargo:rustc-link-lib=static=tide-trace");
 }

@@ -1,6 +1,6 @@
 # tide-trace
 
-Minimum overhead USDT middleware to dynamically trace tide with BPF or Dtrace.
+Minimum overhead [USDT](http://dtrace.org/guide/chp-usdt.html) middleware to dynamically trace tide with [BPF](http://www.brendangregg.com/blog/2019-01-01/learn-ebpf-tracing.html) or [DTrace](https://en.wikipedia.org/wiki/DTrace).
 
 ```
 $ cargo run --examples histogram

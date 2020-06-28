@@ -1,6 +1,24 @@
 # tide-trace
 
-USDT trace middleware for dynamic tracing with BPF or Dtrace.
+Minimum overhead USDT middleware to dynamically trace tide with BPF or Dtrace.
+
+```
+$ sudo bpftrace -p $(pgrep histogram) tools/route-histogram.bt 
+Attaching 2 probes...
+^C
+@us[GET, /favicon.ico]: 
+[32, 64)               1 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|
+
+@us[GET, /route1]: 
+[32, 64)               2 |@@@@@@@@@@@@@@@@@                                   |
+[64, 128)              6 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|
+[128, 256)             2 |@@@@@@@@@@@@@@@@@                                   |
+
+@us[GET, /route2]: 
+[32, 64)               2 |@@@@@@@@@@@@@@@@@@@@                                |
+[64, 128)              5 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|
+[128, 256)             4 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@           |
+```
 
 ## pre-requisites
 

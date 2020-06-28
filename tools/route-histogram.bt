@@ -1,0 +1,11 @@
+usdt::tide:startroute 
+{ 
+    @start[arg2] = nsecs;
+}
+usdt::tide:endroute 
+/@start[arg2]/ 
+{ 
+    $duration_us = (nsecs - @start[arg2]) / 1000;        
+    @us[str(arg0), str(arg1)] = hist($duration_us);
+    delete(@start[arg2]);
+}

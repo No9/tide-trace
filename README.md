@@ -39,6 +39,12 @@ $ sudo apt-get install systemtap-sdt-dev bpftrace
 $ sudo dnf install systemtap-sdt-devel bpftrace
 ```
 
+### mac
+
+```
+$ brew install make 
+```
+
 ## example usage
 
 For a prebuilt applications see examples folder

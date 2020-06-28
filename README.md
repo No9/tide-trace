@@ -3,7 +3,10 @@
 Minimum overhead USDT middleware to dynamically trace tide with BPF or Dtrace.
 
 ```
-$ sudo bpftrace -p $(pgrep histogram) tools/route-histogram.bt 
+$ cargo run --examples histogram
+$ sudo bpftrace -p $(pgrep histogram) tools/route-histogram.bt
+$ curl http://localhost:8080/route1 && curl http://localhost:8080/route2
+
 Attaching 2 probes...
 ^C
 @us[GET, /favicon.ico]: 

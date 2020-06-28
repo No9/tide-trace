@@ -9,6 +9,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     trace=$!
 else
     echo "${$OSTYPE} : unsupported OS" 
+    exit
 fi
 
 sleep 2

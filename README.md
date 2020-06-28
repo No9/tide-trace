@@ -4,10 +4,13 @@ Minimum overhead [USDT](http://dtrace.org/guide/chp-usdt.html) middleware to dyn
 
 ```
 $ cargo run --examples histogram
+
 $ sudo bpftrace -p $(pgrep histogram) tools/route-histogram.bt
+Attaching 2 probes...
+
 $ curl http://localhost:8080/route1 && curl http://localhost:8080/route2
 
-Attaching 2 probes...
+
 ^C
 @us[GET, /favicon.ico]: 
 [32, 64)               1 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|

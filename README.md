@@ -41,6 +41,8 @@ $ sudo dnf install systemtap-sdt-devel bpftrace
 
 ### mac
 
+**This middleware is intended to work on mac but has not been fully tested**
+
 ```
 $ brew install make 
 ```

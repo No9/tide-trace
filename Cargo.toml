@@ -1,6 +1,6 @@
 [package]
 name = "tide-trace"
-version = "0.1.1"
+version = "0.3.0"
 authors = ["Anton Whalley <anton@venshare.com>"]
 edition = "2018"
 description = "Minimum overhead USDT middleware to dynamically trace tide with BPF or DTrace"
@@ -11,9 +11,9 @@ homepage = "https://github.com/no9/tide-trace"
 
 [dependencies]
 
-tide = "0.11"
+tide = "0.12"
 async-std = { version = "1.6.0", features = ["unstable"] }
-http-types = "2.2.1"
+http-types = "2.2.3"
 # uuid = { version = "0.8", features = ["v4"] }
 
 [dev-dependencies]

@@ -1,8 +1,6 @@
 use std::ffi::CString;
-use std::future::Future;
 use std::os::raw::c_char;
 use std::os::raw::c_int;
-use std::pin::Pin;
 use std::sync::atomic::{AtomicI32, Ordering};
 use std::sync::Arc;
 use tide::{Middleware, Next, Request, Result};
@@ -28,13 +26,10 @@ impl USDTMiddleware {
     }
 }
 
-impl<State: Send + Sync + 'static> Middleware<State> for USDTMiddleware {
-    fn handle<'a>(
-        &'a self,
-        req: Request<State>,
-        next: Next<'a, State>,
-    ) -> Pin<Box<dyn Future<Output = Result> + Send + 'a>> {
-        Box::pin(async move {
+#[tide::utils::async_trait]
+impl<State: Clone + Send + Sync + 'static> Middleware<State> for USDTMiddleware {
+    async fn handle(&self, req: Request<State>, next: Next<'_, State>) -> Result {
+        //async move {
             let count = self.reqid.fetch_add(1, Ordering::SeqCst);
             let path = CString::new(req.url().path().to_owned()).expect("CString::new path failed");
             let method =
@@ -49,7 +44,7 @@ impl<State: Send + Sync + 'static> Middleware<State> for USDTMiddleware {
                 startroute(method.as_ptr(), path.as_ptr(), count, req_headers.as_ptr());
             }
 
-            let res = next.run(req).await?;
+            let res = next.run(req).await;
             let status = res.status() as i32;
             let res_headers_coll = res
                 .iter()
@@ -68,7 +63,7 @@ impl<State: Send + Sync + 'static> Middleware<State> for USDTMiddleware {
             }
             self.reqid.load(Ordering::SeqCst);
             Ok(res)
-        })
+        // }
     }
 }
 

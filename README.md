@@ -62,9 +62,9 @@ $ cargo init sample-project
 
 Cargo.toml
 ```
-tide = "0.11"
-tide-trace = { git = "http://github.com/No9/tide-trace.git"}
-async-std = { version = "1.6.0", features = ["unstable", "attributes"] }
+tide = "0.15"
+async-std = { version = "1.8.0", features = ["attributes"] }
+tide-trace = { version = "0.4.0" }
 ```
 
 main.rs

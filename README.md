@@ -3,7 +3,7 @@
 Minimum overhead [USDT](http://dtrace.org/guide/chp-usdt.html) middleware to dynamically trace [tide](https://github.com/http-rs/tide) with [BPF](http://www.brendangregg.com/blog/2019-01-01/learn-ebpf-tracing.html) or [DTrace](https://en.wikipedia.org/wiki/DTrace).
 
 ```
-$ cargo run --examples histogram
+$ cargo run --example histogram
 
 $ sudo bpftrace -p $(pgrep histogram) tools/route-histogram.bt
 Attaching 2 probes...

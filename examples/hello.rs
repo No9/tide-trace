@@ -1,7 +1,7 @@
 #[async_std::main]
 async fn main() -> Result<(), std::io::Error> {
     let mut app = tide::new();
-    app.middleware(tide_trace::USDTMiddleware::new());
+    app.with(tide_trace::USDTMiddleware::new());
     app.at("/").get(|_| async {
         let retval = "Hello, world!";
         tide_trace::probe("tag-text".to_string(), retval.to_string());

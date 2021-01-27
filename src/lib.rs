@@ -11,7 +11,7 @@ use tide::{Middleware, Next, Request, Result};
 ///
 /// ```
 ///     let mut app = tide::new();
-///     app.middleware(tide_trace::USDTMiddleware::new());
+///     app.with(tide_trace::USDTMiddleware::new());
 /// ```
 #[derive(Debug, Clone)]
 pub struct USDTMiddleware {
